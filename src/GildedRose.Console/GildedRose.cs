@@ -77,12 +77,7 @@ namespace GildedRose.Console
                     }
                 }
 
-                if (!IsSulfuras(current))
-                {
-                    DecreaseSellIn(current);
-                }
-
-                bool sellDatePassed = current.SellIn < MINIMUM_SELL_IN;
+                bool sellDatePassed = current.SellIn <= MINIMUM_SELL_IN;
                 if (sellDatePassed)
                 {
                     if (!AgedBrie(current))
@@ -107,6 +102,11 @@ namespace GildedRose.Console
                     {
                         ResetQuality(current);
                     }
+                }
+
+                if (!IsSulfuras(current))
+                {
+                    DecreaseSellIn(current);
                 }
             }
         }
@@ -153,6 +153,7 @@ namespace GildedRose.Console
 
         private static void DecreaseSellIn(Item current)
         {
+            if (IsSulfuras(current)) return;
             current.SellIn = current.SellIn - SELL_IN_GRANULARITY;
         }
 
