@@ -49,7 +49,7 @@ namespace GildedRose.Console
             {
                 Item current = items[i];
 
-                if (!AgedBrie(current) && !IsBackstage(current))
+                if (!EitherAgedBrieOrBackstage(current))
                 {
                     if (HasSomeQuality(current))
                     {
@@ -109,6 +109,11 @@ namespace GildedRose.Console
                     }
                 }
             }
+        }
+
+        private static bool EitherAgedBrieOrBackstage(Item current)
+        {
+            return AgedBrie(current) || IsBackstage(current);
         }
 
         private static bool IsSulfuras(Item current)
