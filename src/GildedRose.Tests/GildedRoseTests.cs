@@ -9,12 +9,10 @@ namespace GildedRose.Tests
     public class GildedRoseTests
     {
         private IList<Item> items;
-        private Program gildedRose;
 
         [SetUp]
         public void Initialize()
         {
-            gildedRose = new Program();
             items = new List<Item>();
         }
 
@@ -28,7 +26,7 @@ namespace GildedRose.Tests
             const int expectedSellIn = 9;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedSellIn, regular.SellIn);
@@ -44,7 +42,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 9;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, regular.Quality);
@@ -60,7 +58,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 8;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, regular.Quality);
@@ -76,7 +74,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 0;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, regular.Quality);
@@ -92,7 +90,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 0;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, regular.Quality);
@@ -108,7 +106,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 6;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, agedBrie.Quality);
@@ -124,7 +122,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 50;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, agedBrie.Quality);
@@ -140,7 +138,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 15;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, sulfuras.Quality);
@@ -156,7 +154,7 @@ namespace GildedRose.Tests
             const int expectedSellIn = 8;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedSellIn, sulfuras.SellIn);
@@ -172,7 +170,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 16;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, backstage.Quality);
@@ -188,7 +186,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 17;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, backstage.Quality);
@@ -204,7 +202,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 18;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, backstage.Quality);
@@ -220,7 +218,7 @@ namespace GildedRose.Tests
             const int expectedQuality = 0;
 
             // Act
-            gildedRose.UpdateQuality(items);
+            GildedRose.UpdateQuality(items);
 
             // Assert
             Assert.AreEqual(expectedQuality, backstage.Quality);
