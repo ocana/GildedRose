@@ -89,7 +89,7 @@ namespace GildedRose.Console
 
                 if (notSulfuras)
                 {
-                    current.SellIn = current.SellIn - SELL_IN_GRANULARITY;
+                    DecreaseSellIn(current);
                 }
 
                 bool sellDatePassed = current.SellIn < MINIMUM_SELL_IN;
@@ -109,7 +109,7 @@ namespace GildedRose.Console
                         }
                         else
                         {
-                            current.Quality = current.Quality - current.Quality;
+                            ResetQuality(current);
                         }
                     }
                     else
@@ -121,6 +121,16 @@ namespace GildedRose.Console
                     }
                 }
             }
+        }
+
+        private static void DecreaseSellIn(Item current)
+        {
+            current.SellIn = current.SellIn - SELL_IN_GRANULARITY;
+        }
+
+        private static void ResetQuality(Item current)
+        {
+            current.Quality = MINIMUM_QUALITY;
         }
 
         private static void IncreaseQuality(Item current)
