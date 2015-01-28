@@ -51,13 +51,7 @@ namespace GildedRose.Console
 
                 if (!EitherAgedBrieOrBackstage(current))
                 {
-                    if (HasSomeQuality(current))
-                    {
-                        if (!IsSulfuras(current))
-                        {
-                            DecreaseQuality(current);
-                        }
-                    }
+                    DecreaseQuality(current);
                 }
                 else
                 {
@@ -83,13 +77,7 @@ namespace GildedRose.Console
                     {
                         if (!IsBackstage(current))
                         {
-                            if (HasSomeQuality(current))
-                            {
-                                if (!IsSulfuras(current))
-                                {
-                                    DecreaseQuality(current);
-                                }
-                            }
+                            DecreaseQuality(current);
                         }
                     }
                     else
@@ -172,6 +160,7 @@ namespace GildedRose.Console
 
         private static void DecreaseQuality(Item current)
         {
+            if (!HasSomeQuality(current) || IsSulfuras(current)) return;
             current.Quality = current.Quality - QUALITY_GRANULARITY;
         }
     }
