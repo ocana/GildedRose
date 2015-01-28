@@ -69,6 +69,11 @@ namespace GildedRose.Console
                 else
                 {
                     DecreaseQuality(current);
+
+                    if (HasPassedSellDate(current))
+                    {
+                        DecreaseQuality(current);
+                    }
                 }
 
                 if (HasPassedSellDate(current))
@@ -76,10 +81,6 @@ namespace GildedRose.Console
                     if (AgedBrie(current))
                     {
                         IncreaseQuality(current);
-                    }
-                    else
-                    {
-                        DecreaseQuality(current);
                     }
 
                     if (IsBackstage(current))
