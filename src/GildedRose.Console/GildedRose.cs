@@ -45,10 +45,10 @@ namespace GildedRose.Console
             {
                 Item current = items[i];
 
-                bool notAgedBrie = current.Name != "Aged Brie";
-                bool isBackstage = current.Name == "Backstage passes to a TAFKAL80ETC concert";
-                bool notBackstage = current.Name != "Backstage passes to a TAFKAL80ETC concert";
-                bool notSulfuras = current.Name != "Sulfuras, Hand of Ragnaros";
+                bool notAgedBrie = !"Aged Brie".Equals(current.Name);
+                bool isBackstage = "Backstage passes to a TAFKAL80ETC concert".Equals(current.Name);
+                bool notBackstage = !isBackstage;
+                bool notSulfuras = !"Sulfuras, Hand of Ragnaros".Equals(current.Name);
 
                 if (notAgedBrie && notBackstage)
                 {
