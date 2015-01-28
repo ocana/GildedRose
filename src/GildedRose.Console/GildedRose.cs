@@ -72,21 +72,16 @@ namespace GildedRose.Console
                         if (isBackstage)
                         {
                             bool isInDoubleIncrement = current.SellIn <= FIRST_SELL_IN_THRESHOLD;
+                            bool isInTripleIncrement = current.SellIn <= SECOND_SELL_IN_THRESHOLD;
+
                             if (isInDoubleIncrement)
                             {
-                                if (notMaximumQualityReached)
-                                {
-                                    IncreaseQuality(current);
-                                }
+                                IncreaseQuality(current);
                             }
 
-                            bool isInTripleIncrement = current.SellIn <= SECOND_SELL_IN_THRESHOLD;
                             if (isInTripleIncrement)
                             {
-                                if (notMaximumQualityReached)
-                                {
-                                    IncreaseQuality(current);
-                                }
+                                IncreaseQuality(current);
                             }
                         }
                     }
