@@ -123,10 +123,9 @@ namespace GildedRose.Console
             return isInDoubleIncrement;
         }
 
-        private static bool NotMaximumQualityReached(Item current)
+        private static bool MaximumQualityReached(Item current)
         {
-            bool notMaximumQualityReached = current.Quality < MAXIMUM_QUALITY;
-            return notMaximumQualityReached;
+           return current.Quality >= MAXIMUM_QUALITY;
         }
 
         private static bool HasSomeQuality(Item current)
@@ -147,10 +146,9 @@ namespace GildedRose.Console
 
         private static void IncreaseQuality(Item current)
         {
-            if (NotMaximumQualityReached(current))
-            {
-                current.Quality = current.Quality + QUALITY_GRANULARITY;
-            }
+            if (MaximumQualityReached(current)) return;
+
+            current.Quality = current.Quality + QUALITY_GRANULARITY;
         }
 
         private static void DecreaseQuality(Item current)
