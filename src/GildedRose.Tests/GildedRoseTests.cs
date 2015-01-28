@@ -113,6 +113,24 @@ namespace GildedRose.Tests
         }
 
         [Test]
+        [Category("Hidden Feature")]
+        [Description("Hidden feature. See http://telladifferentstory.tumblr.com/post/62686321015/gilded-rose-the-hidden-requirement")]
+        public void WhenUpdateQualityOnAgedBrieAfterSellIn_ItShouldIncreaseQualityTwiceFast()
+        {
+            // Arrange
+            Item agedBrie = new Item { Name = "Aged Brie", Quality = 5, SellIn = 0 };
+            items.Add(agedBrie);
+
+            const int expectedQuality = 7;
+
+            // Act
+            GildedRose.UpdateQuality(items);
+
+            // Assert
+            Assert.AreEqual(expectedQuality, agedBrie.Quality);
+        }
+        
+        [Test]
         public void WhenUpdateQualityOnItem_ItShouldNotIncreaseQualityOverFifty()
         {
             // Arrange
