@@ -12,6 +12,10 @@ namespace GildedRose.Console
         private const int FIRST_SELL_IN_THRESHOLD = 10;
         private const int SECOND_SELL_IN_THRESHOLD = 5;
 
+        private const string AGED_BRIE_NAME = "Aged Brie";
+        private const string BACKSTAGE_NAME = "Backstage passes to a TAFKAL80ETC concert";
+        private const string SULFURAS_NAME = "Sulfuras, Hand of Ragnaros";
+
         private static IList<Item> Items;
 
         static void Main(string[] args)
@@ -45,10 +49,10 @@ namespace GildedRose.Console
             {
                 Item current = items[i];
 
-                bool notAgedBrie = !"Aged Brie".Equals(current.Name);
-                bool isBackstage = "Backstage passes to a TAFKAL80ETC concert".Equals(current.Name);
+                bool notAgedBrie = !AGED_BRIE_NAME.Equals(current.Name);
+                bool isBackstage = BACKSTAGE_NAME.Equals(current.Name);
                 bool notBackstage = !isBackstage;
-                bool notSulfuras = !"Sulfuras, Hand of Ragnaros".Equals(current.Name);
+                bool notSulfuras = !SULFURAS_NAME.Equals(current.Name);
 
                 if (notAgedBrie && notBackstage)
                 {
