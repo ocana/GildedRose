@@ -59,7 +59,7 @@ namespace GildedRose.Console
                     {
                         if (notSulfuras)
                         {
-                            current.Quality = current.Quality - QUALITY_GRANULARITY;
+                            DecreaseQuality(current);
                         }
                     }
                 }
@@ -67,7 +67,7 @@ namespace GildedRose.Console
                 {
                     if (notMaximumQualityReached)
                     {
-                        current.Quality = current.Quality + QUALITY_GRANULARITY;
+                        IncreaseQuality(current);
 
                         if (isBackstage)
                         {
@@ -75,7 +75,7 @@ namespace GildedRose.Console
                             {
                                 if (notMaximumQualityReached)
                                 {
-                                    current.Quality = current.Quality + QUALITY_GRANULARITY;
+                                    IncreaseQuality(current);
                                 }
                             }
 
@@ -83,7 +83,7 @@ namespace GildedRose.Console
                             {
                                 if (notMaximumQualityReached)
                                 {
-                                    current.Quality = current.Quality + QUALITY_GRANULARITY;
+                                    IncreaseQuality(current);
                                 }
                             }
                         }
@@ -106,7 +106,7 @@ namespace GildedRose.Console
                             {
                                 if (notSulfuras)
                                 {
-                                    current.Quality = current.Quality - QUALITY_GRANULARITY;
+                                    DecreaseQuality(current);
                                 }
                             }
                         }
@@ -119,12 +119,21 @@ namespace GildedRose.Console
                     {
                         if (notMaximumQualityReached)
                         {
-                            current.Quality = current.Quality + QUALITY_GRANULARITY;
+                            IncreaseQuality(current);
                         }
                     }
                 }
             }
         }
 
+        private static void IncreaseQuality(Item current)
+        {
+            current.Quality = current.Quality + QUALITY_GRANULARITY;
+        }
+
+        private static void DecreaseQuality(Item current)
+        {
+            current.Quality = current.Quality - QUALITY_GRANULARITY;
+        }
     }
 }
