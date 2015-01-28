@@ -62,21 +62,18 @@ namespace GildedRose.Console
                 }
                 else
                 {
-                    if (NotMaximumQualityReached(current))
+                    IncreaseQuality(current);
+
+                    if (isBackstage)
                     {
-                        IncreaseQuality(current);
-
-                        if (isBackstage)
+                        if (IsInDoubleIncrement(current))
                         {
-                            if (IsInDoubleIncrement(current))
-                            {
-                                IncreaseQuality(current);
-                            }
+                            IncreaseQuality(current);
+                        }
 
-                            if (IsInTripleIncrement(current))
-                            {
-                                IncreaseQuality(current);
-                            }
+                        if (IsInTripleIncrement(current))
+                        {
+                            IncreaseQuality(current);
                         }
                     }
                 }
@@ -108,10 +105,7 @@ namespace GildedRose.Console
                     }
                     else
                     {
-                        if (NotMaximumQualityReached(current))
-                        {
-                            IncreaseQuality(current);
-                        }
+                        IncreaseQuality(current);
                     }
                 }
             }
@@ -153,7 +147,10 @@ namespace GildedRose.Console
 
         private static void IncreaseQuality(Item current)
         {
-            current.Quality = current.Quality + QUALITY_GRANULARITY;
+            if (NotMaximumQualityReached(current))
+            {
+                current.Quality = current.Quality + QUALITY_GRANULARITY;
+            }
         }
 
         private static void DecreaseQuality(Item current)
