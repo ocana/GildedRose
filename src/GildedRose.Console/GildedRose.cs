@@ -4,6 +4,14 @@ namespace GildedRose.Console
 {
     public class GildedRose
     {
+        private const int MINIMUM_QUALITY = 0;
+        private const int MAXIMUM_QUALITY = 50;
+        private const int MINIMUM_SELL_IN = 0;
+        private const int QUALITY_GRANULARITY = 1;
+        private const int SELL_IN_GRANULARITY = 1;
+        private const int FIRST_SELL_IN_THRESHOLD = 11;
+        private const int SECOND_SELL_IN_THRESHOLD = 6;
+
         private static IList<Item> Items;
 
         static void Main(string[] args)
@@ -40,8 +48,8 @@ namespace GildedRose.Console
                 bool notBackstage = items[i].Name != "Backstage passes to a TAFKAL80ETC concert";
                 bool notSulfuras = items[i].Name != "Sulfuras, Hand of Ragnaros";
 
-                bool hasSomeQuality = items[i].Quality > 0;
-                bool notMaximumQualityReached = items[i].Quality < 50;
+                bool hasSomeQuality = items[i].Quality > MINIMUM_QUALITY;
+                bool notMaximumQualityReached = items[i].Quality < MAXIMUM_QUALITY;
 
                 if (notAgedBrie && notBackstage)
                 {
@@ -49,7 +57,7 @@ namespace GildedRose.Console
                     {
                         if (notSulfuras)
                         {
-                            items[i].Quality = items[i].Quality - 1;
+                            items[i].Quality = items[i].Quality - QUALITY_GRANULARITY;
                         }
                     }
                 }
@@ -57,23 +65,23 @@ namespace GildedRose.Console
                 {
                     if (notMaximumQualityReached)
                     {
-                        items[i].Quality = items[i].Quality + 1;
+                        items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
 
                         if (isBackstage)
                         {
-                            if (items[i].SellIn < 11)
+                            if (items[i].SellIn < FIRST_SELL_IN_THRESHOLD)
                             {
                                 if (notMaximumQualityReached)
                                 {
-                                    items[i].Quality = items[i].Quality + 1;
+                                    items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
                                 }
                             }
 
-                            if (items[i].SellIn < 6)
+                            if (items[i].SellIn < SECOND_SELL_IN_THRESHOLD)
                             {
                                 if (notMaximumQualityReached)
                                 {
-                                    items[i].Quality = items[i].Quality + 1;
+                                    items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
                                 }
                             }
                         }
@@ -82,10 +90,10 @@ namespace GildedRose.Console
 
                 if (notSulfuras)
                 {
-                    items[i].SellIn = items[i].SellIn - 1;
+                    items[i].SellIn = items[i].SellIn - SELL_IN_GRANULARITY;
                 }
 
-                bool sellDatePassed = items[i].SellIn < 0;
+                bool sellDatePassed = items[i].SellIn < MINIMUM_SELL_IN;
                 if (sellDatePassed)
                 {
                     if (notAgedBrie)
@@ -96,7 +104,7 @@ namespace GildedRose.Console
                             {
                                 if (notSulfuras)
                                 {
-                                    items[i].Quality = items[i].Quality - 1;
+                                    items[i].Quality = items[i].Quality - QUALITY_GRANULARITY;
                                 }
                             }
                         }
@@ -109,7 +117,7 @@ namespace GildedRose.Console
                     {
                         if (notMaximumQualityReached)
                         {
-                            items[i].Quality = items[i].Quality + 1;
+                            items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
                         }
                     }
                 }
