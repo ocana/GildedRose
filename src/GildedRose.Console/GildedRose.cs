@@ -49,16 +49,11 @@ namespace GildedRose.Console
             {
                 Item current = items[i];
 
-                bool notAgedBrie = !AGED_BRIE_NAME.Equals(current.Name);
-                bool isBackstage = BACKSTAGE_NAME.Equals(current.Name);
-                bool notBackstage = !isBackstage;
-                bool notSulfuras = !SULFURAS_NAME.Equals(current.Name);
-
-                if (notAgedBrie && notBackstage)
+                if (!AgedBrie(current) && !IsBackstage(current))
                 {
                     if (HasSomeQuality(current))
                     {
-                        if (notSulfuras)
+                        if (!IsSulfuras(current))
                         {
                             DecreaseQuality(current);
                         }
@@ -68,7 +63,7 @@ namespace GildedRose.Console
                 {
                     IncreaseQuality(current);
 
-                    if (isBackstage)
+                    if (IsBackstage(current))
                     {
                         if (IsInDoubleIncrement(current))
                         {
@@ -82,7 +77,7 @@ namespace GildedRose.Console
                     }
                 }
 
-                if (notSulfuras)
+                if (!IsSulfuras(current))
                 {
                     DecreaseSellIn(current);
                 }
@@ -90,13 +85,13 @@ namespace GildedRose.Console
                 bool sellDatePassed = current.SellIn < MINIMUM_SELL_IN;
                 if (sellDatePassed)
                 {
-                    if (notAgedBrie)
+                    if (!AgedBrie(current))
                     {
-                        if (notBackstage)
+                        if (!IsBackstage(current))
                         {
                             if (HasSomeQuality(current))
                             {
-                                if (notSulfuras)
+                                if (!IsSulfuras(current))
                                 {
                                     DecreaseQuality(current);
                                 }
@@ -108,7 +103,7 @@ namespace GildedRose.Console
                         IncreaseQuality(current);
                     }
 
-                    if (isBackstage)
+                    if (IsBackstage(current))
                     {
                         ResetQuality(current);
                     }
@@ -116,16 +111,29 @@ namespace GildedRose.Console
             }
         }
 
+        private static bool IsSulfuras(Item current)
+        {
+            return SULFURAS_NAME.Equals(current.Name);
+        }
+
+        private static bool IsBackstage(Item current)
+        {
+            return BACKSTAGE_NAME.Equals(current.Name);
+        }
+
+        private static bool AgedBrie(Item current)
+        {
+            return AGED_BRIE_NAME.Equals(current.Name);
+        }
+
         private static bool IsInTripleIncrement(Item current)
         {
-            bool isInTripleIncrement = current.SellIn <= SECOND_SELL_IN_THRESHOLD;
-            return isInTripleIncrement;
+            return current.SellIn <= SECOND_SELL_IN_THRESHOLD;
         }
 
         private static bool IsInDoubleIncrement(Item current)
         {
-            bool isInDoubleIncrement = current.SellIn <= FIRST_SELL_IN_THRESHOLD;
-            return isInDoubleIncrement;
+            return current.SellIn <= FIRST_SELL_IN_THRESHOLD;
         }
 
         private static bool MaximumQualityReached(Item current)
@@ -135,8 +143,7 @@ namespace GildedRose.Console
 
         private static bool HasSomeQuality(Item current)
         {
-            bool hasSomeQuality = current.Quality > MINIMUM_QUALITY;
-            return hasSomeQuality;
+            return current.Quality > MINIMUM_QUALITY;
         }
 
         private static void DecreaseSellIn(Item current)
