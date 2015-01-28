@@ -77,8 +77,7 @@ namespace GildedRose.Console
                     }
                 }
 
-                bool sellDatePassed = current.SellIn <= MINIMUM_SELL_IN;
-                if (sellDatePassed)
+                if (HasPassedSellDate(current))
                 {
                     if (!AgedBrie(current))
                     {
@@ -104,11 +103,13 @@ namespace GildedRose.Console
                     }
                 }
 
-                if (!IsSulfuras(current))
-                {
-                    DecreaseSellIn(current);
-                }
+                DecreaseSellIn(current);
             }
+        }
+
+        private static bool HasPassedSellDate(Item current)
+        {
+            return current.SellIn <= MINIMUM_SELL_IN;
         }
 
         private static bool EitherAgedBrieOrBackstage(Item current)
