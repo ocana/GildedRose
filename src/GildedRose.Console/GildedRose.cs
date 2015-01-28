@@ -102,14 +102,15 @@ namespace GildedRose.Console
                                 }
                             }
                         }
-                        else
-                        {
-                            ResetQuality(current);
-                        }
                     }
                     else
                     {
                         IncreaseQuality(current);
+                    }
+
+                    if (isBackstage)
+                    {
+                        ResetQuality(current);
                     }
                 }
             }
