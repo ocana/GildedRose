@@ -51,47 +51,17 @@ namespace GildedRose.Console
 
                 if (AgedBrie(current))
                 {
-                    IncreaseQuality(current);
-
-                    if (HasPassedSellDate(current))
-                    {
-                        IncreaseQuality(current);
-                    }
+                    ModifyQualityForAgedBrie(current);
                 }
                 else
                 {
                     if (IsBackstage(current))
                     {
-                        if (HasPassedSellDate(current))
-                        {
-                            ResetQuality(current);
-                        }
-                        else
-                        {
-                            IncreaseQuality(current);
-
-                            if (IsBackstage(current))
-                            {
-                                if (IsInDoubleIncrement(current))
-                                {
-                                    IncreaseQuality(current);
-                                }
-
-                                if (IsInTripleIncrement(current))
-                                {
-                                    IncreaseQuality(current);
-                                }
-                            }
-                        }
+                        ModifyQualityForBackstage(current);
                     }
                     else
                     {
-                        DecreaseQuality(current);
-
-                        if (HasPassedSellDate(current))
-                        {
-                            DecreaseQuality(current);
-                        }
+                        ModifyQualityForRegularItem(current);
                     }
                 }
 
@@ -99,14 +69,54 @@ namespace GildedRose.Console
             }
         }
 
+        private static void ModifyQualityForRegularItem(Item current)
+        {
+            DecreaseQuality(current);
+
+            if (HasPassedSellDate(current))
+            {
+                DecreaseQuality(current);
+            }
+        }
+
+        private static void ModifyQualityForBackstage(Item current)
+        {
+            if (HasPassedSellDate(current))
+            {
+                ResetQuality(current);
+            }
+            else
+            {
+                IncreaseQuality(current);
+
+                if (IsBackstage(current))
+                {
+                    if (IsInDoubleIncrement(current))
+                    {
+                        IncreaseQuality(current);
+                    }
+
+                    if (IsInTripleIncrement(current))
+                    {
+                        IncreaseQuality(current);
+                    }
+                }
+            }
+        }
+
+        private static void ModifyQualityForAgedBrie(Item current)
+        {
+            IncreaseQuality(current);
+
+            if (HasPassedSellDate(current))
+            {
+                IncreaseQuality(current);
+            }
+        }
+
         private static bool HasPassedSellDate(Item current)
         {
             return current.SellIn <= MINIMUM_SELL_IN;
-        }
-
-        private static bool EitherAgedBrieOrBackstage(Item current)
-        {
-            return AgedBrie(current) || IsBackstage(current);
         }
 
         private static bool IsSulfuras(Item current)
