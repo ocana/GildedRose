@@ -43,13 +43,15 @@ namespace GildedRose.Console
         {
             for (var i = 0; i < items.Count; i++)
             {
-                bool notAgedBrie = items[i].Name != "Aged Brie";
-                bool isBackstage = items[i].Name == "Backstage passes to a TAFKAL80ETC concert";
-                bool notBackstage = items[i].Name != "Backstage passes to a TAFKAL80ETC concert";
-                bool notSulfuras = items[i].Name != "Sulfuras, Hand of Ragnaros";
+                Item current = items[i];
 
-                bool hasSomeQuality = items[i].Quality > MINIMUM_QUALITY;
-                bool notMaximumQualityReached = items[i].Quality < MAXIMUM_QUALITY;
+                bool notAgedBrie = current.Name != "Aged Brie";
+                bool isBackstage = current.Name == "Backstage passes to a TAFKAL80ETC concert";
+                bool notBackstage = current.Name != "Backstage passes to a TAFKAL80ETC concert";
+                bool notSulfuras = current.Name != "Sulfuras, Hand of Ragnaros";
+
+                bool hasSomeQuality = current.Quality > MINIMUM_QUALITY;
+                bool notMaximumQualityReached = current.Quality < MAXIMUM_QUALITY;
 
                 if (notAgedBrie && notBackstage)
                 {
@@ -57,7 +59,7 @@ namespace GildedRose.Console
                     {
                         if (notSulfuras)
                         {
-                            items[i].Quality = items[i].Quality - QUALITY_GRANULARITY;
+                            current.Quality = current.Quality - QUALITY_GRANULARITY;
                         }
                     }
                 }
@@ -65,23 +67,23 @@ namespace GildedRose.Console
                 {
                     if (notMaximumQualityReached)
                     {
-                        items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
+                        current.Quality = current.Quality + QUALITY_GRANULARITY;
 
                         if (isBackstage)
                         {
-                            if (items[i].SellIn < FIRST_SELL_IN_THRESHOLD)
+                            if (current.SellIn < FIRST_SELL_IN_THRESHOLD)
                             {
                                 if (notMaximumQualityReached)
                                 {
-                                    items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
+                                    current.Quality = current.Quality + QUALITY_GRANULARITY;
                                 }
                             }
 
-                            if (items[i].SellIn < SECOND_SELL_IN_THRESHOLD)
+                            if (current.SellIn < SECOND_SELL_IN_THRESHOLD)
                             {
                                 if (notMaximumQualityReached)
                                 {
-                                    items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
+                                    current.Quality = current.Quality + QUALITY_GRANULARITY;
                                 }
                             }
                         }
@@ -90,10 +92,10 @@ namespace GildedRose.Console
 
                 if (notSulfuras)
                 {
-                    items[i].SellIn = items[i].SellIn - SELL_IN_GRANULARITY;
+                    current.SellIn = current.SellIn - SELL_IN_GRANULARITY;
                 }
 
-                bool sellDatePassed = items[i].SellIn < MINIMUM_SELL_IN;
+                bool sellDatePassed = current.SellIn < MINIMUM_SELL_IN;
                 if (sellDatePassed)
                 {
                     if (notAgedBrie)
@@ -104,20 +106,20 @@ namespace GildedRose.Console
                             {
                                 if (notSulfuras)
                                 {
-                                    items[i].Quality = items[i].Quality - QUALITY_GRANULARITY;
+                                    current.Quality = current.Quality - QUALITY_GRANULARITY;
                                 }
                             }
                         }
                         else
                         {
-                            items[i].Quality = items[i].Quality - items[i].Quality;
+                            current.Quality = current.Quality - current.Quality;
                         }
                     }
                     else
                     {
                         if (notMaximumQualityReached)
                         {
-                            items[i].Quality = items[i].Quality + QUALITY_GRANULARITY;
+                            current.Quality = current.Quality + QUALITY_GRANULARITY;
                         }
                     }
                 }
