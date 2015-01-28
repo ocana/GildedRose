@@ -79,10 +79,7 @@ namespace GildedRose.Console
                     }
                     else
                     {
-                        if (!IsBackstage(current))
-                        {
-                            DecreaseQuality(current);
-                        }
+                        DecreaseQuality(current);
                     }
 
                     if (IsBackstage(current))
@@ -160,7 +157,7 @@ namespace GildedRose.Console
 
         private static void DecreaseQuality(Item current)
         {
-            if (HasNotQuality(current) || IsSulfuras(current)) return;
+            if (IsBackstage(current) || HasNotQuality(current) || IsSulfuras(current)) return;
             current.Quality = current.Quality - QUALITY_GRANULARITY;
         }
     }
