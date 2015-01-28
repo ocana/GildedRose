@@ -241,5 +241,21 @@ namespace GildedRose.Tests
             // Assert
             Assert.AreEqual(expectedQuality, backstage.Quality);
         }
+
+        [Test]
+        public void WhenUpdateQualityOnConjuredItem_ItShouldDecreaseQualityTwiceFast()
+        {
+            // Arrange
+            Item regular = new Item { Name = "Conjured Mana Cake", Quality = 10, SellIn = 5 };
+            items.Add(regular);
+
+            const int expectedQuality = 8;
+
+            // Act
+            GildedRose.UpdateQuality(items);
+
+            // Assert
+            Assert.AreEqual(expectedQuality, regular.Quality);
+        }
     }
 }

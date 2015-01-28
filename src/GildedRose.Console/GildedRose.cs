@@ -15,6 +15,7 @@ namespace GildedRose.Console
         private const string AGED_BRIE_NAME = "Aged Brie";
         private const string BACKSTAGE_NAME = "Backstage passes to a TAFKAL80ETC concert";
         private const string SULFURAS_NAME = "Sulfuras, Hand of Ragnaros";
+        private const string CONJURED_NAME = "Conjured Mana Cake";
 
         private static IList<Item> Items;
 
@@ -61,12 +62,30 @@ namespace GildedRose.Console
                     }
                     else
                     {
-                        ModifyQualityForRegularItem(current);
+                        if (IsConjured(current))
+                        {
+                            ModifyQualityForConjuredItem(current);
+                        }
+                        else
+                        {
+                            ModifyQualityForRegularItem(current);
+                        }
                     }
                 }
 
                 DecreaseSellIn(current);
             }
+        }
+
+        private static void ModifyQualityForConjuredItem(Item current)
+        {
+            DecreaseQuality(current);
+            DecreaseQuality(current);
+        }
+
+        private static bool IsConjured(Item current)
+        {
+            return CONJURED_NAME.Equals(current.Name);
         }
 
         private static void ModifyQualityForRegularItem(Item current)
