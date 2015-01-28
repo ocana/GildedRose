@@ -52,23 +52,35 @@ namespace GildedRose.Console
                 if (AgedBrie(current))
                 {
                     IncreaseQuality(current);
+
+                    if (HasPassedSellDate(current))
+                    {
+                        IncreaseQuality(current);
+                    }
                 }
                 else
                 {
                     if (IsBackstage(current))
                     {
-                        IncreaseQuality(current);
-
-                        if (IsBackstage(current))
+                        if (HasPassedSellDate(current))
                         {
-                            if (IsInDoubleIncrement(current))
-                            {
-                                IncreaseQuality(current);
-                            }
+                            ResetQuality(current);
+                        }
+                        else
+                        {
+                            IncreaseQuality(current);
 
-                            if (IsInTripleIncrement(current))
+                            if (IsBackstage(current))
                             {
-                                IncreaseQuality(current);
+                                if (IsInDoubleIncrement(current))
+                                {
+                                    IncreaseQuality(current);
+                                }
+
+                                if (IsInTripleIncrement(current))
+                                {
+                                    IncreaseQuality(current);
+                                }
                             }
                         }
                     }
@@ -80,19 +92,6 @@ namespace GildedRose.Console
                         {
                             DecreaseQuality(current);
                         }
-                    }
-                }
-
-                if (HasPassedSellDate(current))
-                {
-                    if (AgedBrie(current))
-                    {
-                        IncreaseQuality(current);
-                    }
-
-                    if (IsBackstage(current))
-                    {
-                        ResetQuality(current);
                     }
                 }
 
