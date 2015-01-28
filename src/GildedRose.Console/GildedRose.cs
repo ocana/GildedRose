@@ -35,11 +35,19 @@ namespace GildedRose.Console
         {
             for (var i = 0; i < items.Count; i++)
             {
-                if (items[i].Name != "Aged Brie" && items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                bool notAgedBrie = items[i].Name != "Aged Brie";
+                bool isBackstage = items[i].Name == "Backstage passes to a TAFKAL80ETC concert";
+                bool notBackstage = items[i].Name != "Backstage passes to a TAFKAL80ETC concert";
+                bool notSulfuras = items[i].Name != "Sulfuras, Hand of Ragnaros";
+
+                bool hasSomeQuality = items[i].Quality > 0;
+                bool notMaximumQualityReached = items[i].Quality < 50;
+
+                if (notAgedBrie && notBackstage)
                 {
-                    if (items[i].Quality > 0)
+                    if (hasSomeQuality)
                     {
-                        if (items[i].Name != "Sulfuras, Hand of Ragnaros")
+                        if (notSulfuras)
                         {
                             items[i].Quality = items[i].Quality - 1;
                         }
@@ -47,15 +55,15 @@ namespace GildedRose.Console
                 }
                 else
                 {
-                    if (items[i].Quality < 50)
+                    if (notMaximumQualityReached)
                     {
                         items[i].Quality = items[i].Quality + 1;
 
-                        if (items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                        if (isBackstage)
                         {
                             if (items[i].SellIn < 11)
                             {
-                                if (items[i].Quality < 50)
+                                if (notMaximumQualityReached)
                                 {
                                     items[i].Quality = items[i].Quality + 1;
                                 }
@@ -63,7 +71,7 @@ namespace GildedRose.Console
 
                             if (items[i].SellIn < 6)
                             {
-                                if (items[i].Quality < 50)
+                                if (notMaximumQualityReached)
                                 {
                                     items[i].Quality = items[i].Quality + 1;
                                 }
@@ -72,20 +80,21 @@ namespace GildedRose.Console
                     }
                 }
 
-                if (items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (notSulfuras)
                 {
                     items[i].SellIn = items[i].SellIn - 1;
                 }
 
-                if (items[i].SellIn < 0)
+                bool sellDatePassed = items[i].SellIn < 0;
+                if (sellDatePassed)
                 {
-                    if (items[i].Name != "Aged Brie")
+                    if (notAgedBrie)
                     {
-                        if (items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        if (notBackstage)
                         {
-                            if (items[i].Quality > 0)
+                            if (hasSomeQuality)
                             {
-                                if (items[i].Name != "Sulfuras, Hand of Ragnaros")
+                                if (notSulfuras)
                                 {
                                     items[i].Quality = items[i].Quality - 1;
                                 }
@@ -98,7 +107,7 @@ namespace GildedRose.Console
                     }
                     else
                     {
-                        if (items[i].Quality < 50)
+                        if (notMaximumQualityReached)
                         {
                             items[i].Quality = items[i].Quality + 1;
                         }
