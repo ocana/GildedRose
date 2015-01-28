@@ -135,9 +135,9 @@ namespace GildedRose.Console
            return current.Quality >= MAXIMUM_QUALITY;
         }
 
-        private static bool HasSomeQuality(Item current)
+        private static bool HasNotQuality(Item current)
         {
-            return current.Quality > MINIMUM_QUALITY;
+            return current.Quality <= MINIMUM_QUALITY;
         }
 
         private static void DecreaseSellIn(Item current)
@@ -160,7 +160,7 @@ namespace GildedRose.Console
 
         private static void DecreaseQuality(Item current)
         {
-            if (!HasSomeQuality(current) || IsSulfuras(current)) return;
+            if (HasNotQuality(current) || IsSulfuras(current)) return;
             current.Quality = current.Quality - QUALITY_GRANULARITY;
         }
     }
