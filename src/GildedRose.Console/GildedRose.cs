@@ -49,30 +49,37 @@ namespace GildedRose.Console
             {
                 Item current = items[i];
 
-                if (EitherAgedBrieOrBackstage(current))
+                if (AgedBrie(current))
                 {
                     IncreaseQuality(current);
-
-                    if (IsBackstage(current))
-                    {
-                        if (IsInDoubleIncrement(current))
-                        {
-                            IncreaseQuality(current);
-                        }
-
-                        if (IsInTripleIncrement(current))
-                        {
-                            IncreaseQuality(current);
-                        }
-                    }
                 }
                 else
                 {
-                    DecreaseQuality(current);
+                    if (IsBackstage(current))
+                    {
+                        IncreaseQuality(current);
 
-                    if (HasPassedSellDate(current))
+                        if (IsBackstage(current))
+                        {
+                            if (IsInDoubleIncrement(current))
+                            {
+                                IncreaseQuality(current);
+                            }
+
+                            if (IsInTripleIncrement(current))
+                            {
+                                IncreaseQuality(current);
+                            }
+                        }
+                    }
+                    else
                     {
                         DecreaseQuality(current);
+
+                        if (HasPassedSellDate(current))
+                        {
+                            DecreaseQuality(current);
+                        }
                     }
                 }
 
