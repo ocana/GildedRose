@@ -50,12 +50,9 @@ namespace GildedRose.Console
                 bool notBackstage = current.Name != "Backstage passes to a TAFKAL80ETC concert";
                 bool notSulfuras = current.Name != "Sulfuras, Hand of Ragnaros";
 
-                bool hasSomeQuality = current.Quality > MINIMUM_QUALITY;
-                bool notMaximumQualityReached = current.Quality < MAXIMUM_QUALITY;
-
                 if (notAgedBrie && notBackstage)
                 {
-                    if (hasSomeQuality)
+                    if (HasSomeQuality(current))
                     {
                         if (notSulfuras)
                         {
@@ -65,21 +62,18 @@ namespace GildedRose.Console
                 }
                 else
                 {
-                    if (notMaximumQualityReached)
+                    if (NotMaximumQualityReached(current))
                     {
                         IncreaseQuality(current);
 
                         if (isBackstage)
                         {
-                            bool isInDoubleIncrement = current.SellIn <= FIRST_SELL_IN_THRESHOLD;
-                            bool isInTripleIncrement = current.SellIn <= SECOND_SELL_IN_THRESHOLD;
-
-                            if (isInDoubleIncrement)
+                            if (IsInDoubleIncrement(current))
                             {
                                 IncreaseQuality(current);
                             }
 
-                            if (isInTripleIncrement)
+                            if (IsInTripleIncrement(current))
                             {
                                 IncreaseQuality(current);
                             }
@@ -99,7 +93,7 @@ namespace GildedRose.Console
                     {
                         if (notBackstage)
                         {
-                            if (hasSomeQuality)
+                            if (HasSomeQuality(current))
                             {
                                 if (notSulfuras)
                                 {
@@ -114,13 +108,37 @@ namespace GildedRose.Console
                     }
                     else
                     {
-                        if (notMaximumQualityReached)
+                        if (NotMaximumQualityReached(current))
                         {
                             IncreaseQuality(current);
                         }
                     }
                 }
             }
+        }
+
+        private static bool IsInTripleIncrement(Item current)
+        {
+            bool isInTripleIncrement = current.SellIn <= SECOND_SELL_IN_THRESHOLD;
+            return isInTripleIncrement;
+        }
+
+        private static bool IsInDoubleIncrement(Item current)
+        {
+            bool isInDoubleIncrement = current.SellIn <= FIRST_SELL_IN_THRESHOLD;
+            return isInDoubleIncrement;
+        }
+
+        private static bool NotMaximumQualityReached(Item current)
+        {
+            bool notMaximumQualityReached = current.Quality < MAXIMUM_QUALITY;
+            return notMaximumQualityReached;
+        }
+
+        private static bool HasSomeQuality(Item current)
+        {
+            bool hasSomeQuality = current.Quality > MINIMUM_QUALITY;
+            return hasSomeQuality;
         }
 
         private static void DecreaseSellIn(Item current)
