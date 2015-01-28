@@ -9,8 +9,8 @@ namespace GildedRose.Console
         private const int MINIMUM_SELL_IN = 0;
         private const int QUALITY_GRANULARITY = 1;
         private const int SELL_IN_GRANULARITY = 1;
-        private const int FIRST_SELL_IN_THRESHOLD = 11;
-        private const int SECOND_SELL_IN_THRESHOLD = 6;
+        private const int FIRST_SELL_IN_THRESHOLD = 10;
+        private const int SECOND_SELL_IN_THRESHOLD = 5;
 
         private static IList<Item> Items;
 
@@ -71,7 +71,8 @@ namespace GildedRose.Console
 
                         if (isBackstage)
                         {
-                            if (current.SellIn < FIRST_SELL_IN_THRESHOLD)
+                            bool isInDoubleIncrement = current.SellIn <= FIRST_SELL_IN_THRESHOLD;
+                            if (isInDoubleIncrement)
                             {
                                 if (notMaximumQualityReached)
                                 {
@@ -79,7 +80,8 @@ namespace GildedRose.Console
                                 }
                             }
 
-                            if (current.SellIn < SECOND_SELL_IN_THRESHOLD)
+                            bool isInTripleIncrement = current.SellIn <= SECOND_SELL_IN_THRESHOLD;
+                            if (isInTripleIncrement)
                             {
                                 if (notMaximumQualityReached)
                                 {
