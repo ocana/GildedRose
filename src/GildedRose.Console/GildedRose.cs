@@ -50,27 +50,32 @@ namespace GildedRose.Console
             {
                 Item current = items[i];
 
-                if (IsAgedBrie(current))
-                {
-                    ModifyQualityForAgedBrie(current);
-                }
+                ModifyQuality(current);
 
-                if (IsBackstage(current))
-                {
-                    ModifyQualityForBackstage(current);
-                }
-
-                if (IsConjured(current))
-                {
-                    ModifyQualityForConjuredItem(current);
-                }
-
-                if (IsRegular(current))
-                {
-                    ModifyQualityForRegularItem(current);
-                }
-                
                 DecreaseSellIn(current);
+            }
+        }
+
+        private static void ModifyQuality(Item current)
+        {
+            if (IsAgedBrie(current))
+            {
+                ModifyQualityForAgedBrie(current);
+            }
+
+            if (IsBackstage(current))
+            {
+                ModifyQualityForBackstage(current);
+            }
+
+            if (IsConjured(current))
+            {
+                ModifyQualityForConjuredItem(current);
+            }
+
+            if (IsRegular(current))
+            {
+                ModifyQualityForRegularItem(current);
             }
         }
 
