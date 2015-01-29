@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Gilded Rose by ocana</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Gilded Rose</h1>
+          <h2>Refactoring Kata</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ocana/GildedRose/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ocana/GildedRose/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ocana/GildedRose" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p>Antes de dejaros con el texto original de la kata de Gilded Rose os dejo unos apuntes:</p>
+
+<ul>
+<li><p>A lo largo del ejercicio he descubierto un <em>Requerimiento Oculto</em> no descrito en las instrucciones originales. Hay gente que lo llamaría Bug, pero digamos que es una <em>Feature no decumentada</em>. <a href="http://telladifferentstory.tumblr.com/post/62686321015/gilded-rose-the-hidden-requirement">Hay más gente que lo ha encontrado</a>. Os recomiendo que lo busquéis vosotros mismos.</p></li>
+<li><p>En el punto en el que lo he dejado podría haber hecho algún refactor a patrones, por ejemplo un estrategia, pero lo que realmente me pide el cuerpo es modificar la clase Item, y como es una restricción, he preferido no seguir e introducir la nueva funcionalidad que se nos pedía, ya que en ese punto era más sencillo.</p></li>
+<li><p>Si queréis ver en vídeo gran parte de la resolución, tenéis <a href="https://www.youtube.com/watch?v=LWBtOuREIwM">en youtube a Xavi Gost solucionándolo</a>.</p></li>
+</ul>
+
+<h3>
+<a id="texto-original" class="anchor" href="#texto-original" aria-hidden="true"><span class="octicon octicon-link"></span></a>Texto original</h3>
+
+<p>Hi and welcome to team Gilded Rose. As you know, we are a small inn with a prime location in a prominent city ran by a friendly innkeeper named Allison. We also buy and sell only the finest goods. Unfortunately, our goods are constantly degrading in quality as they approach their sell by date. We have a system in place that updates our inventory for us. It was developed by a no-nonsense type named Leeroy, who has moved on to new adventures. Your task is to add the new feature to our system so that we can begin selling a new category of items. First an introduction to our system:</p>
+
+<pre><code>- All items have a SellIn value which denotes the number of days we have to sell the item
+- All items have a Quality value which denotes how valuable the item is
+- At the end of each day our system lowers both values for every item
+</code></pre>
+
+<p>Pretty simple, right? Well this is where it gets interesting:</p>
+
+<pre><code>- Once the sell by date has passed, Quality degrades twice as fast
+- The Quality of an item is never negative
+- "Aged Brie" actually increases in Quality the older it gets
+- The Quality of an item is never more than 50
+- "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
+- "Backstage passes", like aged brie, increases in Quality as it's SellIn value approaches; Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Quality drops to 0 after the concert
+</code></pre>
+
+<p>We have recently signed a supplier of conjured items. This requires an update to our system:</p>
+
+<pre><code>- "Conjured" items degrade in Quality twice as fast as normal items
+</code></pre>
+
+<p>Feel free to make any changes to the UpdateQuality method and add any new code as long as everything still works correctly. However, do not alter the Item class or Items property as those belong to the goblin in the corner who will insta-rage and one-shot you as he doesn't believe in shared code ownership (you can make the UpdateQuality method and Items property static if you like, we'll cover for you). Your work needs to be completed by Friday, February 18, 2011 08:00:00 AM PST.</p>
+
+<p>Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a legendary item and as such its Quality is 80 and it never alters.</p>
+
+<p>void UpdateQuality()
+        {
+            for (var i = 0; i &lt; Items.Count; i++)
+            {
+                if (Items[i].Name != "Aged Brie" &amp;&amp; Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                {
+                    if (Items[i].Quality &gt; 0)
+                    {
+                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                        {
+                            Items[i].Quality = Items[i].Quality - 1;
+                        }
+                    }
+                }
+                else
+                {
+                    if (Items[i].Quality &lt; 50)
+                    {
+                        Items[i].Quality = Items[i].Quality + 1;</p>
+
+<pre><code>                    if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                    {
+                        if (Items[i].SellIn &lt; 11)
+                        {
+                            if (Items[i].Quality &lt; 50)
+                            {
+                                Items[i].Quality = Items[i].Quality + 1;
+                            }
+                        }
+
+                        if (Items[i].SellIn &lt; 6)
+                        {
+                            if (Items[i].Quality &lt; 50)
+                            {
+                                Items[i].Quality = Items[i].Quality + 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+            {
+                Items[i].SellIn = Items[i].SellIn - 1;
+            }
+
+            if (Items[i].SellIn &lt; 0)
+            {
+                if (Items[i].Name != "Aged Brie")
+                {
+                    if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                    {
+                        if (Items[i].Quality &gt; 0)
+                        {
+                            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                            {
+                                Items[i].Quality = Items[i].Quality - 1;
+                            }
+                        }
+                    }
+                    else
+                   {
+                        Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                    }
+                }
+                else
+                {
+                    if (Items[i].Quality &lt; 50)
+                   {
+                        Items[i].Quality = Items[i].Quality + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    IList&lt;Item&gt; Items = new List&lt;Item&gt;
+        {
+            new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20 },
+            new Item { Name = "Aged Brie", SellIn = 2, Quality = 0 },
+            new Item { Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7 },
+            new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
+            new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 },
+            new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 }
+        };
+
+    class Item
+    {
+        public string Name { get; set; }
+
+        public int SellIn { get; set; }
+
+        public int Quality { get; set; }
+    }
+</code></pre>
+        </section>
+
+        <footer>
+          Gilded Rose is maintained by <a href="https://github.com/ocana">ocana</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
